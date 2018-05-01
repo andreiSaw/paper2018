@@ -5,8 +5,11 @@ import sys
 
 import time
 
-np = int(sys.argv[1])
 temps1 = time.time()
+# Number of points to use for the Pi estimation
+n = int(sys.argv[1])
+# Number of processors to use for the Pi estimation
+np = int(sys.argv[2])
 
 
 def count_pt(N):
@@ -21,15 +24,12 @@ def count_pt(N):
 
 
 if __name__ == '__main__':
-    print('You have {0:1d} CPUs'.format(np))
-
-    # Nummber of points to use for the Pi estimation
-    n = 10000000
+    print('You have {0:1d} CPUs and {1} points'.format(np,n))
 
     # iterable with a list of points to generate in each worker
     # each worker process gets n/np number of points to calculate Pi from
 
-    part_count = [(int)(n / np)] * np
+    part_count = [int(n / np)] * np
 
     # Create the worker pool
     # http://docs.python.org/library/multiprocessing.html#module-multiprocessing.pool
