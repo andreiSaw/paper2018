@@ -4,4 +4,3 @@ FROM ubuntu:14.04
 # Update Ubuntu Software repository
 RUN apt-get update
 COPY run.py /run.py
-CMD ["python3","run.py"]
