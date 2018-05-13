@@ -24,7 +24,7 @@ def count_pt(N):
 
 
 if __name__ == '__main__':
-    print('You have {0:1d} CPUs and {1} points'.format(np,n))
+    # print('You have {0:1d} CPUs and {1} points'.format(np,n))
 
     # iterable with a list of points to generate in each worker
     # each worker process gets n/np number of points to calculate Pi from
@@ -37,5 +37,5 @@ if __name__ == '__main__':
 
     # parallel map
     count = pool.map(count_pt, part_count)
-    print("Esitmated value of Pi:: ", sum(count) / (n * 1.0) * 4)
+    # print("Esitmated value of Pi:: ", sum(count) / (n * 1.0) * 4)
     print(time.time() - temps1)
