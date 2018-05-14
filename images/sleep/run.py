@@ -10,15 +10,9 @@ def sleep2sec(durarion):
 
 
 if __name__ == '__main__':
-    timeperproc = int(durarion / np)
-    part_count =[]
-    leftover=durarion%np
-    for i in range(np):
-        if(leftover>0):
-            part_count.append(timeperproc+1)
-            leftover-=1
-        else:
-            part_count.append(timeperproc)
+    part_count = [durarion / np] * np
+
+    print(part_count)
 
     # Create the worker pool
     # http://docs.python.org/library/multiprocessing.html#module-multiprocessing.pool
