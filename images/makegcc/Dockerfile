@@ -5,7 +5,7 @@ FROM ubuntu:14.04
 RUN apt-get -y update
 RUN apt-get -y upgrade
 
-RUN sudo apt install build-essential
+RUN sudo apt -y install build-essential
 
 RUN sudo apt-get -y install xz-utils make g++ wget
 RUN wget https://ftpmirror.gnu.org/gcc/gcc-8.1.0/gcc-8.1.0.tar.gz
