@@ -28,12 +28,20 @@ if __name__ == '__main__':
     # iterable with a list of points to generate in each worker
     # each worker process gets n/np number of points to calculate Pi from
 
-    part_count = [int(n / np)] * np
+    pointsperproc = int(n / np)
+    part_count =[]
+    leftover=n%np
+    for i in range(np):
+        if(leftover>0):
+            part_count.append(pointsperproc+1)
+            leftover-=1
+        else:
+            part_count.append(pointsperproc)
 
     # Create the worker pool
     # http://docs.python.org/library/multiprocessing.html#module-multiprocessing.pool
     pool = Pool(processes=np)
-    
+
     temps1 = time.time()
     # parallel map
     count = pool.map(count_pt, part_count)
