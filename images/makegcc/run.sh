@@ -2,11 +2,11 @@ comm="make -j"
 comm+=$1
 comm+=" > log.out"
 cd gcc-5.5.0/
-./contrib/download_prerequisites
+./contrib/download_prerequisites > log.out
 cd ..
 mkdir objdir
 cd objdir
-$PWD/../gcc-5.5.0/configure --prefix=$HOME/GCC-5.5.0 --disable-multilib
+$PWD/../gcc-5.5.0/configure --prefix=$HOME/GCC-5.5.0 --disable-multilib > log.out
 #show command. It looks ok
 echo $comm
 a=$SECONDS
