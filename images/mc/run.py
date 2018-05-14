@@ -5,7 +5,6 @@ import sys
 
 import time
 
-temps1 = time.time()
 # Number of points to use for the Pi estimation
 n = int(sys.argv[1])
 # Number of processors to use for the Pi estimation
@@ -34,7 +33,8 @@ if __name__ == '__main__':
     # Create the worker pool
     # http://docs.python.org/library/multiprocessing.html#module-multiprocessing.pool
     pool = Pool(processes=np)
-
+    
+    temps1 = time.time()
     # parallel map
     count = pool.map(count_pt, part_count)
     # print("Esitmated value of Pi:: ", sum(count) / (n * 1.0) * 4)
