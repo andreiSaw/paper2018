@@ -4,4 +4,4 @@ FROM ubuntu:14.04
 # Update Ubuntu Software repository
 RUN apt-get update
 
-ADD run.py /
+COPY run.py /run.py
