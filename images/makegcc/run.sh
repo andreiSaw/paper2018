@@ -1,5 +1,6 @@
 comm="make -j"
 comm+=$1
+comm+=" > log.out"
 cd gcc-5.5.0/
 ./contrib/download_prerequisites
 cd ..
