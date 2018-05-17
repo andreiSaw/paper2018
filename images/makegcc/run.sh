@@ -7,9 +7,8 @@ buildDeps='wget unzip bison flex libmpc-dev g++ ' \
  && mkdir objdir \
  && cd objdir \
  && ../configure --enable-languages=c,c++,fortran --disable-multilib \
-    --disable-bootstrap --build=x86_64-linux-gnu \
- && a=$SECONDS \
- && make -j"$1"
+    --disable-bootstrap --build=x86_64-linux-gnu
+a=$SECONDS
+make -j"$1"
 elapsedseconds=$(( SECONDS - a ))
-echo "$((elapsedseconds / 60)) minutes and $((elapsedseconds % 60)) seconds elapsed."
-echo elapsedseconds | tee /output/test.txt
+echo "$elapsedseconds secssss elapsed."
