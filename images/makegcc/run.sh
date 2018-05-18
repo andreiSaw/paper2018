@@ -8,4 +8,5 @@ buildDeps='wget unzip bison flex libmpc-dev g++ ' \
  && cd objdir \
  && ../configure --enable-languages=c,c++,fortran --disable-multilib \
     --disable-bootstrap --build=x86_64-linux-gnu
-/usr/bin/time make -j"$1"
+fmt="run { date = '$(date)', user = '$who', test = '$test', host = '$(hostname)', times = { user = %U, system = %S, elapsed = %e } }"
+/usr/bin/time -f "$fmt" make -j"$1"

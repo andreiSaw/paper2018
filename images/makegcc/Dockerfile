@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
      libopenblas-dev \
      openmpi-bin \
      libopenmpi-dev \
+     time \
  && apt-get clean
 
 ADD https://gcc.gnu.org/git/?p=gcc.git;a=shortlog;h=refs/heads/gcc-7-branch gcc_shortlog
