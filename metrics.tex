@@ -1,6 +1,10 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb} % for \diagup
+\usepackage{mathtools}
+\usepackage{tikz} % for tikz solution
 
 \begin{document}
 
@@ -18,4 +22,37 @@ t_j c_j}
 C_i
 },$$ где $t_j$ - время выполнения $j$-ой задачи из пачки,  $c_j$ - количество процессоров задействованных для выполнения $j$-ой задачи из пачки. 
 
+\section{Математическая модель}
+
+Пусть $J$ - множество задач, $|J|=N$;
+$M$ - множество серверов, $|M|=K$;
+$C = \{1,2,..L\}$ - число ядер ($L$ - максимально возможное количество ядер);
+\begin{center}
+\begin{math}
+\forall_m \in M:\exists_{c_i}, i=1,...,L \Rightarrow f:J \nrightarrow M
+\end{math}
+\end{center}
+где $f$ - функция планировщика, а
+\begin{center}
+\begin{math}
+f:J \nrightarrow M \Leftrightarrow
+\forall_j \in J : f(j) = \left[ \begin{matrix} m \in M \\ undefined   \end{matrix} \right.,
+\end{math}
+\end{center}
+- частичное отображение.
+
+Таким образом, частичное отображение подразумевает работу планировщика в формате: 1) если есть подходящие ресурсы - разместить на ресурсе; 2) если подходящих ресурсов на данный момент нет - задача не размещается. 
+
+Качество решения тем лучше, чем меньше общее время выполнения пачки задач, и выше плотность загрузки имеющихся ресурсов. В силу этого предлагается следующий вид функции цели:
+$$
+\frac
+{t_{TA} 
+\sum_{i=1}^{K} 
+C_i
+}
+{
+\sum_{j=1}^{N} 
+t_j c_j}
+t_{TA} \rightarrow \min
+$$
 \end{document}
