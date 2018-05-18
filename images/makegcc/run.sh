@@ -8,5 +8,4 @@ buildDeps='wget unzip bison flex libmpc-dev g++ ' \
  && cd objdir \
  && ../configure --enable-languages=c,c++,fortran --disable-multilib \
     --disable-bootstrap --build=x86_64-linux-gnu
-a=$SECONDS
 time make -j"$1"
