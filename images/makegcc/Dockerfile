@@ -14,4 +14,3 @@ RUN apt-get update && apt-get install -y \
  && apt-get clean
 
 ADD https://gcc.gnu.org/git/?p=gcc.git;a=shortlog;h=refs/heads/gcc-7-branch gcc_shortlog
-COPY run.sh /run.sh 

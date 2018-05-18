@@ -9,6 +9,4 @@ buildDeps='wget unzip bison flex libmpc-dev g++ ' \
  && ../configure --enable-languages=c,c++,fortran --disable-multilib \
     --disable-bootstrap --build=x86_64-linux-gnu
 a=$SECONDS
-make -j"$1"
-elapsedseconds=$(( SECONDS - a ))
-echo "$elapsedseconds secssss elapsed."
+time make -j"$1"
