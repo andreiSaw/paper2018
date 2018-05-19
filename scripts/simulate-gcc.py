@@ -11,14 +11,14 @@ from disneylandClient import (
 
 STATUS_IN_PROCESS = {Job.PENDING, Job.PULLED, Job.RUNNING}
 STATUS_FINAL = {Job.COMPLETED, Job.FAILED}
-path = "outputMC.json"
+path = "outputGCC.json"
 
 descriptor = {
-    "input": [],
+    "input": ["git:https://github.com/andreiSaw/paper2018"],
 
     "container": {
         "workdir": "",
-        "name": "als23/montecarlo:latest",
+        "name": "als23/makegcc:latest",
         "cpu_needed": 16,
         "max_memoryMB": 1024,
         "min_memoryMB": 512,
@@ -49,9 +49,9 @@ def main():
 
     jobs = []
     outputlist = []
-    for i in range(1, 11):
+    for i in range(16, 17):
         dsc = descriptor
-        dsc['container']['cmd'] = "sh -lc 'python3 run.py 2520000 {} > /output/test.txt'".format(i)
+        dsc['container']['cmd'] = "sh -lc '/input/images/makegcc/run.sh {} > /output/test.txt 2>&1'".format(i)
         job = Job(
             input=json.dumps(dsc),
             kind="docker",
@@ -75,20 +75,25 @@ def main():
                     print("Job failed!")
                 else:
                     x = json.loads(jobs[idx].output)
-                    timevar = float(x[0][13:])
+                    sxtemp = x[0]
                     d = json.loads(jobs[idx].input)
                     cmd = d['container']["cmd"]
-                    param = int(cmd[23:cmd.find(" ", 24)])
-                    temp = cmd.find(" ", 24)
+                    temp = cmd.find(" ", 36)
                     cores = int(cmd[temp:cmd.find(">") - 1])
+                    tempvar = sxtemp[sxtemp.find("run { date "):]
+                    substr = "elapsed = "
+                    tempvar = tempvar[tempvar.find(substr):]
+                    tempvar = tempvar[len(substr):tempvar.find(" ", len(substr))]
+                    timevar = float(tempvar)
+                    paramsvector = "--enable-languages=c,c++,fortran --disable-multilib --disable-bootstrap --build=x86_64-linux-gnu"
                     outputlist.append(
                         {"cores": cores, "program": {"image": d['container']["name"], "cmd": cmd}, "time": timevar,
-                         "paramsvector": [param]})
+                         "paramsvector": paramsvector})
                     print("result:", x)
-    # statelist = load_data()
-    # statelist.extend(outputlist)
+    statelist = load_data()
+    statelist.extend(outputlist)
     with open(path, "w") as f:
-        json.dump(outputlist, f)
+        json.dump(statelist, f)
 
     print("All done!")
 

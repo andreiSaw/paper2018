@@ -11,15 +11,15 @@ from disneylandClient import (
 
 STATUS_IN_PROCESS = {Job.PENDING, Job.PULLED, Job.RUNNING}
 STATUS_FINAL = {Job.COMPLETED, Job.FAILED}
-path = "outputGCC.json"
+path = "outputMC.json"
 
 descriptor = {
     "input": [],
 
     "container": {
         "workdir": "",
-        "name": "als23/makegcc:latest",
-        "cpu_needed": 8,
+        "name": "als23/montecarlo:latest",
+        "cpu_needed": 16,
         "max_memoryMB": 1024,
         "min_memoryMB": 512,
     },
@@ -49,9 +49,9 @@ def main():
 
     jobs = []
     outputlist = []
-    for i in range(4, 5):
+    for i in range(1, 17):
         dsc = descriptor
-        dsc['container']['cmd'] = "sh -lc './run.sh {}'".format(i)
+        dsc['container']['cmd'] = "sh -lc 'python3 run.py 7207200 {} > /output/test.txt'".format(i)
         job = Job(
             input=json.dumps(dsc),
             kind="docker",
@@ -75,9 +75,18 @@ def main():
                     print("Job failed!")
                 else:
                     x = json.loads(jobs[idx].output)
-                    outputlist.append({"cores": idx + 1, "program": json.loads(jobs[idx].input), "time": x, "paramsvector": ""})
+                    timevar = float(x[0][13:])
+                    d = json.loads(jobs[idx].input)
+                    cmd = d['container']["cmd"]
+                    param = int(cmd[23:cmd.find(" ", 24)])
+                    temp = cmd.find(" ", 24)
+                    cores = int(cmd[temp:cmd.find(">") - 1])
+                    outputlist.append(
+                        {"cores": cores, "program": {"image": d['container']["name"], "cmd": cmd}, "time": timevar,
+                         "paramsvector": [param]})
                     print("result:", x)
-
+    # statelist = load_data()
+    # statelist.extend(outputlist)
     with open(path, "w") as f:
         json.dump(outputlist, f)
 

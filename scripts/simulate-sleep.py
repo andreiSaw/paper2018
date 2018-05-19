@@ -49,9 +49,9 @@ def main():
 
     jobs = []
     outputlist = []
-    for i in range(14, 17):
+    for i in range(15, 17):
         dsc = descriptor
-        dsc['container']['cmd'] = "sh -lc 'python3 run.py 140 {} > /output/test.txt'".format(i)
+        dsc['container']['cmd'] = "sh -lc 'python3 run.py 60 {} > /output/test.txt'".format(i)
         job = Job(
             input=json.dumps(dsc),
             kind="docker",
