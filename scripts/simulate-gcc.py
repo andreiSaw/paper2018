@@ -1,7 +1,5 @@
-import time
 import json
-import os
-import types
+import time
 
 from disneylandClient import (
     new_client,
@@ -9,8 +7,8 @@ from disneylandClient import (
     RequestWithId,
 )
 
-STATUS_IN_PROCESS = {Job.PENDING, Job.PULLED, Job.RUNNING}
-STATUS_FINAL = {Job.COMPLETED, Job.FAILED}
+from .help import STATUS_FINAL, dump_data
+
 path = "outputGCC.json"
 
 descriptor = {
@@ -31,16 +29,6 @@ descriptor = {
         ]
     }
 }
-
-
-def load_data():
-    if not os.path.isfile(path):
-        return []
-    with open(path, "r") as json_data:
-        statelist = json.load(json_data)
-        if isinstance(statelist, list):
-            return statelist
-        return []
 
 
 def main():
@@ -90,10 +78,8 @@ def main():
                         {"cores": cores, "program": {"image": d['container']["name"], "cmd": cmd}, "time": timevar,
                          "paramsvector": paramsvector})
                     print("result:", x)
-    statelist = load_data()
-    statelist.extend(outputlist)
-    with open(path, "w") as f:
-        json.dump(statelist, f)
+
+    dump_data(outputlist, path)
 
     print("All done!")
 
