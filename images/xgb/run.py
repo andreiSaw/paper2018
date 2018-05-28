@@ -12,7 +12,7 @@ warnings.filterwarnings(action='ignore', category=DeprecationWarning)
 
 
 def main():
-    df = pd.DataFrame.from_csv("dataset.csv")  # dataset loading
+    df = pd.read_csv("dataset.csv")  # dataset loading
 
     df['target'] = df.index
     df.reset_index(drop=True)
