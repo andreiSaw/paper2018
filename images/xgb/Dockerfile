@@ -1,32 +1,13 @@
-# source from github.com/ParrotPrediction/docker-course-xgboost
+FROM ubuntu:16.04
 
-#Download base image
-FROM jupyter/minimal-notebook
-
-USER root
-
-# libav-tools for matplotlib anim
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends libav-tools git && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-USER jovyan
-
+ENV LANG C.UTF-8
+RUN apt-get update && apt-get install -y python python-dev python3.5 python3.5-dev python3-pip virtualenv libssl-dev libpq-dev git build-essential libfontconfig1 libfontconfig1-dev
+RUN pip3 install setuptools pip --upgrade --force-reinstall
 # Install Python 3 packages
-RUN conda install --quiet --yes \
-	'pandas' \
-	'matplotlib' \
-	'seaborn' \
-	'graphviz' \
-	'scikit-learn'
-
-# Add shortcuts to distinguish pip for python2 and python3 envs
-RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
-    ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
+RUN pip3 install sklearn
 
 # Install XGBoost library
 RUN git clone --recursive https://github.com/dmlc/xgboost && \
     cd xgboost && \
     make -j4 && \
-    cd python-package; python setup.py install
+    cd python-package; python3 setup.py install

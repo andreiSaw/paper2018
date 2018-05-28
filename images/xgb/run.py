@@ -12,7 +12,7 @@ warnings.filterwarnings(action='ignore', category=DeprecationWarning)
 
 
 def main():
-    iris = datasets.load_iris()  # dataset loading
+    iris = datasets.load_wine()  # dataset loading
     X = iris.data  # Features stored in X
     y = iris.target  # Class variable
 
