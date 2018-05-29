@@ -1,6 +1,5 @@
 import sys
 import time
-# Importing dataset from sklearn
 import warnings
 
 import pandas as pd
@@ -12,14 +11,19 @@ warnings.filterwarnings(action='ignore', category=DeprecationWarning)
 
 
 def main():
-    df = pd.read_csv("dataset.csv")  # dataset loading
+    df = pd.read_csv("/input/images/xgb/nursery.data.txt", header=None)  # dataset loading
+    df.columns = ['parents', 'has_nurs', 'form', 'children', 'housing', 'finance', 'social', 'health', 'target']
+    from sklearn import preprocessing
+    def transform(feature):
+        le = preprocessing.LabelEncoder()
+        le.fit(df[feature])
+        df[feature] = le.transform(df[feature])
 
-    # df['target'] = df.index
-    # df.reset_index(drop=True)
-    # df.index = range(0, len(df))
+    for feature in df.columns:
+        transform(feature)
 
-    X = df.drop(['T'], axis=1)
-    y = df['T']
+    X = df.drop(['target'], axis=1)
+    y = df['target']
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -29,8 +33,6 @@ def main():
     temps1 = time.time()
     clf.fit(X_train, y_train)
     print(time.time() - temps1)
-    # y_pred = clf.predict(X_test)
-    # print(metrics.accuracy_score(y_test, y_pred))
 
 
 if __name__ == '__main__':
