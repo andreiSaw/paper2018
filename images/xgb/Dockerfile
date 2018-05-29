@@ -11,4 +11,4 @@ RUN git clone --recursive https://github.com/dmlc/xgboost && \
     cd xgboost && \
     make -j4 && \
     cd python-package; python3 setup.py install
-COPY letterr.csv /dataset.csv
+COPY dataset.csv /dataset.csv
