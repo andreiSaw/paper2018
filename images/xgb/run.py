@@ -14,12 +14,12 @@ warnings.filterwarnings(action='ignore', category=DeprecationWarning)
 def main():
     df = pd.read_csv("dataset.csv")  # dataset loading
 
-    df['target'] = df.index
-    df.reset_index(drop=True)
-    df.index = range(0, len(df))
+    # df['target'] = df.index
+    # df.reset_index(drop=True)
+    # df.index = range(0, len(df))
 
-    X = df.drop(['target'], axis=1)
-    y = df['target']
+    X = df.drop(['T'], axis=1)
+    y = df['T']
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
