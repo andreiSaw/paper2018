@@ -28,7 +28,7 @@ def main():
     X = df.drop([0], axis=1)
     y = df[0]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     # print(len(X_train))
 
     # set xgboost params
